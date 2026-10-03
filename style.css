@@ -70,6 +70,50 @@ body {
   border-radius: 4px;
 }
 
+/* ---- Selector de skin ---- */
+#skin-select {
+  background: #22223a;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#skin-select:focus {
+  outline: 2px solid #7aa2f7;
+  outline-offset: 1px;
+}
+
+/* Ajustes de la página según la skin activa (data-skin en <body>) */
+body[data-skin="neon"] {
+  background: #000;
+}
+
+body[data-skin="neon"] #board,
+body[data-skin="neon"] #next-canvas {
+  border-color: #2f1a4a;
+  box-shadow: 0 0 24px rgba(212, 0, 255, 0.35);
+}
+
+body[data-skin="pastel"] {
+  background: #2a2633;
+}
+
+body[data-skin="pastel"] #board,
+body[data-skin="pastel"] #next-canvas {
+  border-color: #d9cfc2;
+  border-radius: 10px;
+}
+
+body[data-skin="pixel"] #board,
+body[data-skin="pixel"] #next-canvas {
+  border: 3px solid #3a3a5a;
+  border-radius: 0;
+}
+
 /* ---- Controles ---- */
 .controls ul {
   list-style: none;

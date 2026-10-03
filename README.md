@@ -42,6 +42,7 @@ Es una versión jugable del Tetris clásico con todas las mecánicas que esperar
 - **Sistema de puntuación** clásico de Tetris (100 / 300 / 500 / 800 multiplicado por nivel).
 - **Niveles** que aumentan cada 10 líneas y aceleran la caída.
 - **Pausa** y **Game Over** con opción de reinicio.
+- **Skins visuales** seleccionables en caliente desde el panel lateral (**Retro**, **Neón**, **Pastel** y **Pixel art**); la elección se guarda en `localStorage`.
 
 ---
 
@@ -173,9 +174,31 @@ Algunos parámetros fáciles de tunear en `game.js`:
 | `COLS`         | Columnas del tablero                     | `10`                  |
 | `ROWS`         | Filas del tablero                        | `20`                  |
 | `BLOCK`        | Tamaño en píxeles de cada celda          | `30`                  |
-| `COLORS`       | Paleta de colores por tipo de pieza      | 7 colores             |
+| `SKINS`        | Skins disponibles: paleta, fondo, cuadrícula y función de dibujo de bloque | `retro`, `neon`, `pastel`, `pixel` |
 | `LINE_SCORES`  | Puntos por 1, 2, 3 o 4 líneas eliminadas | `[0,100,300,500,800]` |
 | `dropInterval` | Velocidad inicial de caída en ms         | `1000`                |
+
+### Skins
+
+Cada entrada de `SKINS` tiene:
+
+| Campo       | Significado                                                                 |
+| ----------- | --------------------------------------------------------------------------- |
+| `name`      | Nombre que aparece en el selector `SKIN`                                     |
+| `colors`    | Paleta 1-indexada (`null` en la posición 0), 7 colores en orden I, O, T, S, Z, J, L |
+| `bg`        | Color de fondo de los canvas (tablero y siguiente pieza)                    |
+| `grid`      | Color de las líneas de la cuadrícula                                        |
+| `drawBlock` | `drawBlock(context, x, y, color, size)`: dibuja un bloque con el estilo de la skin |
+| `ghostAlpha` | (Opcional) Opacidad de la pieza fantasma; por defecto `0.2`                |
+
+| Skin        | Estilo                                                                      |
+| ----------- | --------------------------------------------------------------------------- |
+| Retro       | Bloques cuadrados con colores planos (estilo original)                      |
+| Neón        | Fondo negro y brillo (_glow_) con `shadowBlur` del canvas                   |
+| Pastel      | Colores suaves y esquinas redondeadas                                       |
+| Pixel art   | Textura de píxeles 5 × 5 con bisel claro/oscuro sobre cada bloque           |
+
+La skin elegida se guarda en `localStorage` con la clave `tetris.skin` y se aplica al instante, incluso en pausa. Para añadir una nueva basta con agregar una entrada a `SKINS`: el selector se rellena automáticamente.
 
 > Si cambias `COLS`, `ROWS` o `BLOCK`, recuerda ajustar también `width` y `height` del `<canvas id="board">` en `index.html` para que coincida (`COLS × BLOCK` × `ROWS × BLOCK`).
 
