@@ -17,6 +17,7 @@ Implementación del clásico **Tetris** en JavaScript vanilla, usando HTML5 Canv
     - [Opción 1: abrir el archivo directamente](#opción-1-abrir-el-archivo-directamente)
     - [Opción 2: servidor local (recomendado)](#opción-2-servidor-local-recomendado)
   - [Controles](#controles)
+    - [Menú de pausa](#menú-de-pausa)
   - [Cómo funciona](#cómo-funciona)
     - [1. `index.html`](#1-indexhtml)
     - [2. `style.css`](#2-stylecss)
@@ -41,7 +42,8 @@ Es una versión jugable del Tetris clásico con todas las mecánicas que esperar
 - **Vista previa** de la siguiente pieza.
 - **Sistema de puntuación** clásico de Tetris (100 / 300 / 500 / 800 multiplicado por nivel).
 - **Niveles** que aumentan cada 10 líneas y aceleran la caída.
-- **Pausa** y **Game Over** con opción de reinicio.
+- **Menú de pausa** (`P` / `Escape`) con opciones para reanudar, reiniciar, ver los controles y elegir el nivel inicial.
+- **Game Over** con opción de reinicio.
 
 ---
 
@@ -84,7 +86,19 @@ Después abre `http://localhost:8000` en el navegador.
 | `↑` o `X` | Rotar la pieza en sentido horario |
 | `↓`       | Soft drop (bajar más rápido)      |
 | `Espacio` | Hard drop (caída instantánea)     |
-| `P`       | Pausar / reanudar                 |
+| `P`       | Abrir / cerrar el menú de pausa   |
+| `Escape`  | Abrir / cerrar el menú de pausa   |
+
+### Menú de pausa
+
+Pulsa `P` o `Escape` durante la partida para abrir el menú de pausa (no se puede abrir en Game Over). Opciones:
+
+- **Reanudar**: vuelve al juego (también con `P` o `Escape`).
+- **Reiniciar**: empieza una partida nueva sin recargar la página.
+- **Ver controles**: despliega dentro del menú la lista de teclas.
+- **Nivel inicial** (1–10): nivel con el que empezará la **próxima** partida (al pulsar _Reiniciar_ o tras un Game Over). La velocidad de caída se ajusta con la misma fórmula que el resto de niveles y el nivel sigue subiendo cada 10 líneas a partir del inicial.
+
+Mientras el menú está abierto se bloquean todos los controles del juego (flechas, `Espacio`, `X`): solo funcionan `P`/`Escape` y la navegación del propio menú. Al reanudar se ignoran las teclas que siguieran pulsadas hasta que se suelten, para evitar movimientos accidentales.
 
 ---
 
@@ -98,7 +112,7 @@ Define la estructura visual:
 
 - Un `<canvas id="board">` de **300 × 600** píxeles donde se renderiza el tablero.
 - Un panel lateral con `SCORE`, `LINES`, `LEVEL`, vista de la siguiente pieza y la lista de controles.
-- Un overlay para los estados **PAUSA** y **GAME OVER**.
+- Un overlay para el estado **GAME OVER** y un menú de pausa independiente (`#pause-menu`).
 
 ### 2. `style.css`
 
@@ -115,7 +129,7 @@ Contiene toda la lógica del juego. A grandes rasgos:
 - **Game loop** (`loop`): basado en `requestAnimationFrame`, acumula el tiempo transcurrido y baja la pieza una fila cuando se supera `dropInterval`.
 - **Limpieza de líneas** (`clearLines`): recorre el tablero de abajo hacia arriba; cada fila completa se elimina y se inserta una vacía en la cima.
 - **Puntuación**: usa la tabla clásica `[0, 100, 300, 500, 800]` multiplicada por el nivel actual; el hard drop suma 2 puntos por celda recorrida y el soft drop 1 punto por fila.
-- **Nivel y velocidad**: el nivel sube cada 10 líneas; la velocidad de caída se calcula como `max(100, 1000 − (level − 1) × 90)` milisegundos.
+- **Nivel y velocidad**: la partida empieza en el nivel inicial elegido en el menú de pausa (1 por defecto) y sube un nivel cada 10 líneas; la velocidad de caída se calcula como `max(100, 1000 − (level − 1) × 90)` milisegundos.
 - **Ghost piece** (`ghostY`): proyecta la posición final de la pieza actual hacia abajo y la dibuja con `globalAlpha = 0.2`.
 
 ### Flujo del juego
@@ -133,7 +147,7 @@ init()
      ├─ draw()  (grid + tablero + ghost + pieza actual)
      └─ requestAnimationFrame(loop)
 
-   keydown → mover / rotar / soft-drop / hard-drop / pausa
+   keydown → mover / rotar / soft-drop / hard-drop / menú de pausa (P / Escape)
 ```
 
 Cuando una pieza recién generada ya colisiona al aparecer (`spawn`), se dispara `endGame()` y se muestra el overlay de **Game Over**.

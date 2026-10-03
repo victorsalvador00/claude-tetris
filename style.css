@@ -150,3 +150,122 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Menú de pausa ---- */
+.pause-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 20, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+}
+
+.pause-menu.hidden,
+.pm-controls.hidden {
+  display: none;
+}
+
+.pause-box {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  text-align: center;
+  padding: 24px 20px;
+  background: #16161f;
+  border: 1px solid #2a2a3a;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+#pause-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #7aa2f7;
+  margin-bottom: 6px;
+}
+
+.pm-btn {
+  background: #22223a;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.pm-btn:hover {
+  background: #2c2c4a;
+  border-color: #7aa2f7;
+}
+
+.pm-btn:focus-visible,
+.pm-level select:focus-visible {
+  outline: 2px solid #9bbdff;
+  outline-offset: 2px;
+}
+
+.pm-primary {
+  background: #7aa2f7;
+  color: #0f0f17;
+  border-color: #7aa2f7;
+}
+
+.pm-primary:hover {
+  background: #9bbdff;
+}
+
+.pm-controls {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: #1a1a25;
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.pm-controls li {
+  font-size: 12px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pm-level {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.pm-level select {
+  background: #22223a;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.pm-hint {
+  font-size: 11px;
+  color: #555570;
+}
