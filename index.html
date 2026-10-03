@@ -47,7 +47,49 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+
+        <!-- Records: solo visible en game over -->
+        <div id="gameover-records" class="records hidden">
+          <p id="new-record-msg" class="new-record hidden">¡NUEVO RÉCORD!</p>
+          <form id="name-form" class="name-form hidden">
+            <label for="name-input">Tu nombre</label>
+            <input id="name-input" type="text" maxlength="12" autocomplete="off" spellcheck="false" placeholder="Anónimo" />
+            <button type="submit" id="save-name-btn">Guardar</button>
+          </form>
+          <div id="gameover-table-wrap">
+            <table class="records-table">
+              <thead>
+                <tr><th>#</th><th>Nombre</th><th>Puntos</th><th>Líneas</th><th>Combo</th></tr>
+              </thead>
+              <tbody id="gameover-records-body"></tbody>
+            </table>
+          </div>
+          <p class="records-stats">
+            Mejor combo: <span id="gameover-best-combo">0</span> · Líneas máx.: <span id="gameover-max-lines">0</span>
+          </p>
+          <button id="gameover-menu-btn" class="secondary-btn">Inicio</button>
+        </div>
+
         <button id="restart-btn">Reiniciar</button>
+      </div>
+    </div>
+
+    <!-- Pantalla de inicio con la tabla de records -->
+    <div id="start-screen" class="start-screen">
+      <div class="start-box">
+        <h1 class="start-title">TETRIS</h1>
+        <span class="label">MEJORES PUNTUACIONES</span>
+        <table class="records-table">
+          <thead>
+            <tr><th>#</th><th>Nombre</th><th>Puntos</th><th>Líneas</th><th>Combo</th></tr>
+          </thead>
+          <tbody id="start-records-body"></tbody>
+        </table>
+        <p class="records-stats">
+          Mejor combo: <span id="start-best-combo">0</span> · Líneas máx.: <span id="start-max-lines">0</span>
+        </p>
+        <button id="play-btn" class="primary-btn">Jugar</button>
+        <button id="clear-records-btn" class="secondary-btn">Borrar records</button>
       </div>
     </div>
   </div>
